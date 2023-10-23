@@ -1,7 +1,11 @@
 <template>
   <div>
     <ul class="products">
-      <li class="product-item" v-for="(product, index) in products" :key="index">
+      <li
+        class="product-item"
+        v-for="(product, index) in products"
+        :key="index"
+      >
         <ProductInfo :product="product">
           <button class="cta" @click="addToCart(product)">Buy</button>
         </ProductInfo>
@@ -11,14 +15,15 @@
 </template>
 
 <script setup>
-import { ref } from 'vue'
-import ProductInfo from './product-info/ProductInfo.vue'
-import products from './product-data.js'
+import ProductInfo from "./product-info/ProductInfo.vue";
+import products from "./product-data.js";
+import { useCartStore } from "@/stores/cart.js";
+/* import { storeToRefs } from "pinia"; */
 
-const cart = ref([])
+const cartStore = useCartStore();
 
 function addToCart(product) {
-  cart.value.push({ ...product })
+  cartStore.cart.push({ ...product });
 }
 </script>
 

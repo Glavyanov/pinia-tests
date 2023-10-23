@@ -1,19 +1,40 @@
 <template>
   <div class="container">
     <div>
-      <input placeholder="Enter Search Term" @input="searchTerm = $event.target.value" />
+      <input
+        placeholder="Enter Search Term"
+        @input="searchTerm = $event.target.value"
+      />
     </div>
     <div class="filters">
       <div class="filters-text">Filters:</div>
-      <div><button @click="filter('Heads')" :class="getClass('Heads')">Heads</button></div>
-      <div><button @click="filter('Arms')" :class="getClass('Arms')">Arms</button></div>
-      <div><button @click="filter('Torsos')" :class="getClass('Torsos')">Torsos</button></div>
-      <div><button @click="filter('Bases')" :class="getClass('Bases')">Bases</button></div>
+      <div>
+        <button @click="filter('Heads')" :class="getClass('Heads')">
+          Heads
+        </button>
+      </div>
+      <div>
+        <button @click="filter('Arms')" :class="getClass('Arms')">Arms</button>
+      </div>
+      <div>
+        <button @click="filter('Torsos')" :class="getClass('Torsos')">
+          Torsos
+        </button>
+      </div>
+      <div>
+        <button @click="filter('Bases')" :class="getClass('Bases')">
+          Bases
+        </button>
+      </div>
       <div><button @click="clearFilters()">Clear Filters</button></div>
     </div>
     <div>
       <ul class="products">
-        <li class="product-item" v-for="(product, index) in pagedResults" :key="index">
+        <li
+          class="product-item"
+          v-for="(product, index) in pagedResults"
+          :key="index"
+        >
           <ProductInfo :product="product">
             <button class="cta" @click="addToCart(product)">Buy</button>
           </ProductInfo>
@@ -22,50 +43,41 @@
     </div>
     <div>
       <button @click="prevPage()" class="button-link">Previous Page</button>
-      Showing {{ currentStartIndex }} to {{ currentEndIndex }} of {{ resultCount }} results
+      Showing {{ currentStartIndex }} to {{ currentEndIndex }} of
+      {{ resultCount }} results
       <button @click="nextPage()" class="button-link">Next Page</button>
     </div>
   </div>
 </template>
 
 <script setup>
-import { ref, computed } from 'vue'
-import ProductInfo from '@/catalog/product-info/ProductInfo.vue'
+import { ref, computed } from "vue";
+import ProductInfo from "@/catalog/product-info/ProductInfo.vue";
 
-import useSearch from './useSearch'
-import useFilters from './useFilters'
-import usePagination from './usePagination'
+import useSearch from "./useSearch";
+import useFilters from "./useFilters";
+import usePagination from "./usePagination";
 
-const searchTerm = ref('')
-const { searchResults } = useSearch(searchTerm)
+const searchTerm = ref("");
+const { searchResults } = useSearch(searchTerm);
 
-const {
-  filters,
-  applyFilters,
-  clearFilters,
-  filteredResults,
-} = useFilters(searchResults)
+const { filters, applyFilters, clearFilters, filteredResults } =
+  useFilters(searchResults);
 
-const {
-  nextPage,
-  prevPage,
-  currentStartIndex,
-  currentEndIndex,
-  pagedResults,
-} = usePagination(filteredResults)
+const { nextPage, prevPage, currentStartIndex, currentEndIndex, pagedResults } =
+  usePagination(filteredResults);
 
 function filter(category) {
-  const filtersObj = { category }
-  applyFilters(filtersObj)
+  const filtersObj = { category };
+  applyFilters(filtersObj);
 }
 
 function getClass(category) {
-  return filters.value.some(f => f['category'] === category)
-    ? 'cta'
-    : ''
+  return filters.value.some((f) => f["category"] === category) ? "cta" : "";
 }
 
-const resultCount = computed(() => filteredResults.value.length)
+const resultCount = computed(() => filteredResults.value.length);
+
 </script>
 
 <style scoped>
@@ -122,7 +134,7 @@ button {
   font-size: 18px;
 }
 
-.filters>* {
+.filters > * {
   margin-right: 10px;
 }
 </style>
