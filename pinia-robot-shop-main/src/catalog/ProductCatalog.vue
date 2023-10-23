@@ -19,10 +19,10 @@ import ProductInfo from "./product-info/ProductInfo.vue";
 import { useProductStore } from "@/stores/product.js";
 import { useCartStore } from "@/stores/cart.js";
 import { storeToRefs } from "pinia";
+import { onMounted } from "vue";
 
 const cartStore = useCartStore();
 const { products } = storeToRefs(useProductStore());
-useProductStore().getProducts();
 
 function addToCart(product) {
   /* cartStore.$patch((state) => {
@@ -30,6 +30,10 @@ function addToCart(product) {
   }); */
   cartStore.cart.push({ ...product });
 }
+
+onMounted(() => {
+  useProductStore().getProducts();
+});
 </script>
 
 <style scoped>
