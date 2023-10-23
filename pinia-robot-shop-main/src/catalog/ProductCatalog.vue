@@ -23,6 +23,9 @@ import { useCartStore } from "@/stores/cart.js";
 const cartStore = useCartStore();
 
 function addToCart(product) {
+  /* cartStore.$patch((state) => {
+    state.cart.push({...product});
+  }); */
   cartStore.cart.push({ ...product });
 }
 </script>
