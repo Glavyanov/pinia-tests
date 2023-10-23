@@ -16,11 +16,13 @@
 
 <script setup>
 import ProductInfo from "./product-info/ProductInfo.vue";
-import products from "./product-data.js";
+import { useProductStore } from "@/stores/product.js";
 import { useCartStore } from "@/stores/cart.js";
-/* import { storeToRefs } from "pinia"; */
+import { storeToRefs } from "pinia";
 
 const cartStore = useCartStore();
+const { products } = storeToRefs(useProductStore());
+useProductStore().getProducts();
 
 function addToCart(product) {
   /* cartStore.$patch((state) => {
