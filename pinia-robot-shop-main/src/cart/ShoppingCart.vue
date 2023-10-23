@@ -1,33 +1,36 @@
 <template>
   <div class="container">
     <h1>Your Cart</h1>
-    <div class="empty-cart" v-if="cartStore.cart.length === 0">
+    <div class="empty-cart" v-if="cart.length === 0">
       You have no items in your cart
     </div>
-    <ul class="cart" v-if="cartStore.cart.length > 0">
-      <li class="cart-item" v-for="(product, index) in cartStore.cart" :key="index">
+    <ul class="cart" v-if="cart.length > 0">
+      <li
+        class="cart-item"
+        v-for="(product, index) in cart"
+        :key="index"
+      >
         <ProductInfo :product="product">
           <button @click="removeFromCart(product)">Remove</button>
         </ProductInfo>
       </li>
     </ul>
-    <div v-if="cartStore.cart.length > 0" class="total">
+    <div v-if="cart.length > 0" class="total">
       Total: {{ toCurrency(cartTotal) }}
     </div>
   </div>
 </template>
 
 <script setup>
-import { ref } from "vue";
 import { toCurrency } from "@/shared/formatters";
 import ProductInfo from "@/catalog/product-info/ProductInfo.vue";
 import { useCartStore } from "@/stores/cart.js";
+import { storeToRefs } from "pinia";
 
-const cartStore = useCartStore();
-const cartTotal = ref(0);
+const { cart, cartTotal } = storeToRefs(useCartStore());
 
 function removeFromCart(product) {
-  cartStore.cart = cartStore.cart.filter((p) => p !== product);
+  cart.value = cart.value.filter((p) => p !== product);
 }
 
 </script>

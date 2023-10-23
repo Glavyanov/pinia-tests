@@ -53,6 +53,7 @@
 <script setup>
 import { ref, computed } from "vue";
 import ProductInfo from "@/catalog/product-info/ProductInfo.vue";
+import { useCartStore } from "@/stores/cart.js";
 
 import useSearch from "./useSearch";
 import useFilters from "./useFilters";
@@ -60,6 +61,7 @@ import usePagination from "./usePagination";
 
 const searchTerm = ref("");
 const { searchResults } = useSearch(searchTerm);
+const cartStore = useCartStore();
 
 const { filters, applyFilters, clearFilters, filteredResults } =
   useFilters(searchResults);
@@ -78,6 +80,9 @@ function getClass(category) {
 
 const resultCount = computed(() => filteredResults.value.length);
 
+function addToCart(product) {
+  cartStore.cart.push({ ...product });
+}
 </script>
 
 <style scoped>
