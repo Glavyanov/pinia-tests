@@ -1,5 +1,6 @@
 <template>
   <div>
+    <h2 v-if="productsLoading" >Product data is loading....</h2>
     <ul class="products">
       <li
         class="product-item"
@@ -22,7 +23,7 @@ import { storeToRefs } from "pinia";
 import { onMounted } from "vue";
 
 const { addToCart } = useCartStore();
-const { products } = storeToRefs(useProductStore());
+const { products, productsLoading } = storeToRefs(useProductStore());
 
 onMounted(async () => {
   await useProductStore().getProducts();
