@@ -1,7 +1,7 @@
 import { defineStore, acceptHMRUpdate } from "pinia";
 import { ref } from "vue";
 
-export const useProductStore = defineStore("product", () => {
+export const useProductStore = defineStore("products", () => {
   const products = ref([]);
 
   const getProducts = async () => {
