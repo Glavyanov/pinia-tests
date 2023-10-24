@@ -19,7 +19,27 @@ export default function localStoragePlugin({ store, options }) {
     }
   });
 
+  const wrappedActions = {};
+
+  if (options.cache) {
+    for (const actionToCache in options.cache) {
+      const originalAction = store[actionToCache];
+      const newAction = () => {
+        const stateKey = options.cache[actionToCache].stateKey;
+        const key = `${store.cacheKeyPrefix}-${store.$id}-${stateKey}`;
+        const cachedData = localStorage.getItem(key);
+        if(cachedData){
+            store[stateKey] = JSON.parse(cachedData);
+        } else {
+           originalAction.apply(null, arguments);
+        }
+      };
+      wrappedActions[actionToCache] = newAction
+    }
+  }
+  
   return {
     cacheKeyPrefix: "robot-shop",
+    ...wrappedActions,
   };
 }
