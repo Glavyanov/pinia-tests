@@ -27,11 +27,9 @@ import ProductInfo from "@/catalog/product-info/ProductInfo.vue";
 import { useCartStore } from "@/stores/cart.js";
 import { storeToRefs } from "pinia";
 
-const { cart, cartTotal } = storeToRefs(useCartStore());
-
-function removeFromCart(product) {
-  cart.value = cart.value.filter((p) => p !== product);
-}
+const cartStore = useCartStore();
+const { cart, cartTotal} = storeToRefs(cartStore);
+const { removeFromCart } = cartStore;
 
 </script>
 
