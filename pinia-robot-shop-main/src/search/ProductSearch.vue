@@ -61,7 +61,7 @@ import usePagination from "./usePagination";
 
 const searchTerm = ref("");
 const { searchResults } = useSearch(searchTerm);
-const cartStore = useCartStore();
+const { addToCart } = useCartStore();
 
 const { filters, applyFilters, clearFilters, filteredResults } =
   useFilters(searchResults);
@@ -80,9 +80,6 @@ function getClass(category) {
 
 const resultCount = computed(() => filteredResults.value.length);
 
-function addToCart(product) {
-  cartStore.cart.push({ ...product });
-}
 </script>
 
 <style scoped>
