@@ -21,13 +21,21 @@ import { useProductStore } from "@/stores/product.js";
 import { useCartStore } from "@/stores/cart.js";
 import { storeToRefs } from "pinia";
 import { onMounted } from "vue";
+import { useRouter } from "vue-router";
 
 const { addToCart } = useCartStore();
 const { products, productsLoading } = storeToRefs(useProductStore());
+const router = useRouter();
+
+router.beforeEach((to, from, next) => {
+  let choice = confirm("Leave page?");
+  choice ? next() : next(false);
+});
 
 onMounted(async () => {
   await useProductStore().getProducts();
 });
+
 </script>
 
 <style scoped>
