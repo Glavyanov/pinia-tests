@@ -1,4 +1,4 @@
-import { defineStore } from "pinia";
+import { defineStore, acceptHMRUpdate } from "pinia";
 import { ref } from "vue";
 
 export const useProductStore = defineStore("product", () => {
@@ -14,3 +14,7 @@ export const useProductStore = defineStore("product", () => {
     getProducts,
   };
 });
+
+if(import.meta.hot){
+  import.meta.hot.accept(acceptHMRUpdate(useProductStore, import.meta.hot));
+}

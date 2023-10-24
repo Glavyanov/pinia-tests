@@ -14,9 +14,6 @@ export const useCartStore = defineStore("cart", () => {
   );
 
   const addToCart = (product) => {
-      /* cartStore.$patch((state) => {
-      state.cart.push({...product});
-    }); */
     productIds.value.push(product.id);
   };
 
