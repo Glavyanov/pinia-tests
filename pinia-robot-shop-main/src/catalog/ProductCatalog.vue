@@ -21,15 +21,8 @@ import { useCartStore } from "@/stores/cart.js";
 import { storeToRefs } from "pinia";
 import { onMounted } from "vue";
 
-const { productIds } = storeToRefs(useCartStore());
+const { addToCart } = useCartStore();
 const { products } = storeToRefs(useProductStore());
-
-function addToCart(product) {
-  /* cartStore.$patch((state) => {
-    state.cart.push({...product});
-  }); */
-  productIds.value.push(product.id);
-}
 
 onMounted(async () => {
   await useProductStore().getProducts();
